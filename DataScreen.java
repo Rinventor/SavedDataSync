@@ -3,42 +3,30 @@ package com.rinventor.transportmod.testing;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.rinventor.transportmod.TransportMod;
-import com.rinventor.transportmod.core.data.PTMStaticData;
-import com.rinventor.transportmod.core.data.PTMStops;
+import com.rinventor.transportmod.core.data.computer.menus.CMenu14;
 import com.rinventor.transportmod.core.init.ModNetwork;
-import com.rinventor.transportmod.network.data.serverbound.PTMDataSaveMessage;
-import com.rinventor.transportmod.objects.blockentities.computer.CScreenButtonMessage;
-import com.rinventor.transportmod.objects.blockentities.computer.menus.CMenu14;
-import com.rinventor.transportmod.objects.data.types.StationStop;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
-import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class DataScreen extends AbstractContainerScreen<DataMenu> {
     private final Player entity;
-    private int count = 0;
+    private int count;
 
-    public DataScreen(CMenu14 container, Inventory inventory, Component text) {
+    public DataScreen(DataMenu container, Inventory inventory, Component text) {
         super(container, inventory, text);
         this.entity = container.entity;
         this.imageWidth = 320;
         this.imageHeight = 240;
-        count = PTMSavedData.get(Minecraft.getInstance().level);
+
+        count = container.data;
+
+        //count = PTMSavedData.get(Minecraft.getInstance().level);
         //WILL THROW A RUNTIME ERROR THAT I CREATED because I’m accessing saved data on client side
-        //I can’t understand how to get and assign the data here to display it on the screen
     }
 
     private static final ResourceLocation texture = new ResourceLocation(TransportMod.MOD_ID + ":textures/cmenu.png");

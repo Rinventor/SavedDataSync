@@ -1,9 +1,16 @@
 package com.rinventor.transportmod.testing;
 
+import com.rinventor.transportmod.core.base.PTMScreen;
+import com.rinventor.transportmod.core.data.Ref;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.Packet;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.network.NetworkEvent;
 
-public class PTMSavedDataClientboundPacket implements Packet<ClientGameListener> {
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Supplier;
+
+public class PTMSavedDataClientboundPacket {
 
     public final int a1;
 
@@ -19,18 +26,19 @@ public class PTMSavedDataClientboundPacket implements Packet<ClientGameListener>
         buffer.writeInt(this.a1);
     }
 
-//    public boolean handle(Supplier<NetworkEvent.Context> ctx) {
-//        AtomicBoolean success = new AtomicBoolean(false);
-//        ctx.get().enqueueWork(() -> {
-//            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> success.set(ClientAccess.dataSync1(a1)));
-//        });
-//
-//        ctx.get().setPacketHandled(true);
-//        return success.get();
-//    }
+    //Send packet to 1 player only who will open the screen
 
-    public void handle(ClientGameListener listener) {
-        listener.handleCount(this);
+
+    public boolean handle(Supplier<NetworkEvent.Context> ctx) {
+        AtomicBoolean success = new AtomicBoolean(false);
+        ctx.get().enqueueWork(() -> {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+                //int data = a1;
+            });
+        });
+
+        ctx.get().setPacketHandled(true);
+        return success.get();
     }
 
 }

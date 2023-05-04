@@ -42,7 +42,7 @@ public class PTMSavedData extends SavedData {
     public static PTMSavedData getInstance(LevelAccessor level) {
         if (!PTMWorld.isServer(level))
             throw Exceptions.SAVED_DATA_ILLEGAL_ACCESS;
-        return ((ServerLevel)level).getDataStorage().computeIfAbsent(PTMSavedData::load, PTMSavedData::create, "ptm-stops");
+        return ((ServerLevel) level).getDataStorage().computeIfAbsent(PTMSavedData::load, PTMSavedData::create, "ptm-count");
     }
 
     public static void set(LevelAccessor level, int count) {
